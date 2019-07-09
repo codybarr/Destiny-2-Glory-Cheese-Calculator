@@ -23,7 +23,9 @@
 			<p v-if="difference">
 				<strong>Difference: {{ difference }}</strong>
 			</p>
-			<button @click="calculateTeams" class="button mt-4">Calculate New Teams</button>
+
+			<button @click="calculateTeams" class="button mt-4" :disabled="empty">Calculate New Teams</button>
+
 			<div v-if="newTeams && newTeams.length" class="flex flex-wrap justify-center">
 				<div
 					v-for="(team, index) of newTeams"
@@ -59,22 +61,22 @@ export default {
 	data() {
 		return {
 			// for testing
-			glory1: 4321,
-			glory2: 233,
-			glory3: 1700,
-			glory4: 2100,
-			glory5: 3800,
-			glory6: 600,
-			glory7: 1200,
-			glory8: 1945,
-			// glory1: 0,
-			// glory2: 0,
-			// glory3: 0,
-			// glory4: 0,
-			// glory5: 0,
-			// glory6: 0,
-			// glory7: 0,
-			// glory8: 0,
+			// glory1: 4321,
+			// glory2: 233,
+			// glory3: 1700,
+			// glory4: 2100,
+			// glory5: 3800,
+			// glory6: 600,
+			// glory7: 1200,
+			// glory8: 1945,
+			glory1: '',
+			glory2: '',
+			glory3: '',
+			glory4: '',
+			glory5: '',
+			glory6: '',
+			glory7: '',
+			glory8: '',
 			newTeams: []
 		}
 	},
@@ -85,17 +87,46 @@ export default {
 		}
 	},
 	computed: {
-		team1average() {
+		team1empty() {
 			return (
-				(this.glory1 + this.glory2 + this.glory3 + this.glory4) /
-				4
-			).toFixed(1)
+				this.glory1 == '' ||
+				this.glory2 == '' ||
+				this.glory3 == '' ||
+				this.glory4 == ''
+			)
+		},
+		team2empty() {
+			return (
+				this.glory5 == '' ||
+				this.glory6 == '' ||
+				this.glory7 == '' ||
+				this.glory8 == ''
+			)
+		},
+		empty() {
+			return this.team1empty || this.team2empty
+		},
+		team1average() {
+			return this.team1empty
+				? 0
+				: (
+						(this.glory1 +
+							this.glory2 +
+							this.glory3 +
+							this.glory4) /
+						4
+				  ).toFixed(1)
 		},
 		team2average() {
-			return (
-				(this.glory5 + this.glory6 + this.glory7 + this.glory8) /
-				4
-			).toFixed(1)
+			return this.team2empty
+				? 0
+				: (
+						(this.glory5 +
+							this.glory6 +
+							this.glory7 +
+							this.glory8) /
+						4
+				  ).toFixed(1)
 		},
 		difference() {
 			return (
@@ -182,9 +213,18 @@ export default {
 
 .button {
 	@apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
-}
-.button:hover {
-	@apply bg-blue-700;
+
+	&:hover {
+		@apply bg-blue-700;
+	}
+
+	&:disabled {
+		@apply bg-gray-300;
+
+		&:hover {
+			@apply bg-gray-300;
+		}
+	}
 }
 </style>
 
