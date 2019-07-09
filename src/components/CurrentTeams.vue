@@ -1,28 +1,30 @@
 <template>
 	<div>
-		<article class="flex items-center justify-center flex-col w-3/4 mx-auto my-0 text-center">
-			<h1 class="mt-4">Current Teams</h1>
-			<section class="flex">
-				<section class="flex flex-col w-25 mr-10">
+		<article class="w-full max-w-3xl text-center m-10 mx-auto">
+			<h1>Current Teams</h1>
+			<section class="flex flex-wrap">
+				<section class="flex flex-col m-2 w-full md:w-1/2 mx-auto">
 					<h2 class="m-4">Team 1</h2>
-					<input v-model.number="glory1" type="text" class="input" placeholder="Enter glory" />
-					<input v-model.number="glory2" type="text" class="input" placeholder="Enter glory" />
-					<input v-model.number="glory3" type="text" class="input" placeholder="Enter glory" />
-					<input v-model.number="glory4" type="text" class="input" placeholder="Enter glory" />
+					<input v-model.number="glory1" type="number" class="input" placeholder="Enter glory" />
+					<input v-model.number="glory2" type="number" class="input" placeholder="Enter glory" />
+					<input v-model.number="glory3" type="number" class="input" placeholder="Enter glory" />
+					<input v-model.number="glory4" type="number" class="input" placeholder="Enter glory" />
 					<p class="m-2">Average: {{ team1average || 0 }}</p>
 				</section>
-				<section class="flex flex-col w-25">
+				<section class="flex flex-col m-2 w-full md:w-1/2 mx-auto">
 					<h2 class="m-4">Team 2</h2>
-					<input v-model.number="glory5" type="text" class="input" placeholder="Enter glory" />
-					<input v-model.number="glory6" type="text" class="input" placeholder="Enter glory" />
-					<input v-model.number="glory7" type="text" class="input" placeholder="Enter glory" />
-					<input v-model.number="glory8" type="text" class="input" placeholder="Enter glory" />
+					<input v-model.number="glory5" type="number" class="input" placeholder="Enter glory" />
+					<input v-model.number="glory6" type="number" class="input" placeholder="Enter glory" />
+					<input v-model.number="glory7" type="number" class="input" placeholder="Enter glory" />
+					<input v-model.number="glory8" type="number" class="input" placeholder="Enter glory" />
 					<p class="m-2">Average: {{ team2average || 0 }}</p>
 				</section>
 			</section>
-			<p v-if="difference">Difference: {{ difference }}</p>
+			<p v-if="difference">
+				<strong>Difference: {{ difference }}</strong>
+			</p>
 			<button @click="calculateTeams" class="button mt-4">Calculate New Teams</button>
-			<div v-if="newTeams && newTeams.length" class="flex flex-row">
+			<div v-if="newTeams && newTeams.length" class="flex flex-wrap justify-center">
 				<div
 					v-for="(team, index) of newTeams"
 					:key="index"
@@ -57,22 +59,22 @@ export default {
 	data() {
 		return {
 			// for testing
-			// glory1: 4321,
-			// glory2: 233,
-			// glory3: 1700,
-			// glory4: 2100,
-			// glory5: 3800,
-			// glory6: 600,
-			// glory7: 1200,
-			// glory8: 1945,
-			glory1: '',
-			glory2: '',
-			glory3: '',
-			glory4: '',
-			glory5: '',
-			glory6: '',
-			glory7: '',
-			glory8: '',
+			glory1: 4321,
+			glory2: 233,
+			glory3: 1700,
+			glory4: 2100,
+			glory5: 3800,
+			glory6: 600,
+			glory7: 1200,
+			glory8: 1945,
+			// glory1: 0,
+			// glory2: 0,
+			// glory3: 0,
+			// glory4: 0,
+			// glory5: 0,
+			// glory6: 0,
+			// glory7: 0,
+			// glory8: 0,
 			newTeams: []
 		}
 	},
