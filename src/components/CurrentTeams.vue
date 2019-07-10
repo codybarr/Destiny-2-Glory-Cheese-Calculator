@@ -2,51 +2,11 @@
 	<div>
 		<article class="w-full text-center my-10 mx-auto">
 			<h1>Current Teams</h1>
-			<section class="flex flex-wrap max-w-4xl mx-auto">
-				<section class="flex flex-col m-2 w-full md:w-1/2 mx-auto">
+			<section class="flex flex-wrap justify-center items-center -mx-4 px-8">
+				<section class="flex flex-col w-full md:w-1/2 p-4">
 					<h2 class="m-4">Team 1</h2>
-					<div class="flex flex-row items-center">
-						<strong class="mx-2 bg-red-300 px-2">1.</strong>
-						<input
-							v-model.number="glory1"
-							type="number"
-							class="input flex-grow"
-							placeholder="Enter glory"
-						/>
-					</div>
-					<div class="flex flex-row items-center">
-						<strong class="mx-2 bg-red-300 px-2">2.</strong>
-						<input
-							v-model.number="glory2"
-							type="number"
-							class="input flex-grow"
-							placeholder="Enter glory"
-						/>
-					</div>
-					<div class="flex flex-row items-center">
-						<strong class="mx-2 bg-red-300 px-2">3.</strong>
-						<input
-							v-model.number="glory3"
-							type="number"
-							class="input flex-grow"
-							placeholder="Enter glory"
-						/>
-					</div>
-					<div class="flex flex-row items-center">
-						<strong class="mx-2 bg-red-300 px-2">4.</strong>
-						<input
-							v-model.number="glory4"
-							type="number"
-							class="input flex-grow"
-							placeholder="Enter glory"
-						/>
-					</div>
-					<p class="m-2">Average: {{ team1average || 0 }}</p>
-				</section>
-				<section class="flex flex-col m-2 w-full md:w-1/2 mx-auto">
-					<h2 class="m-4">Team 2</h2>
-					<div class="flex flex-row items-center">
-						<strong class="mx-2 bg-blue-300 px-2">5.</strong>
+					<div v-for="(num, index) of [1, 2, 3, 4]" :key="index" class="flex flex-row items-center">
+						<strong class="has-red-bg">{{ num }}</strong>
 						<input
 							v-model.number="glory5"
 							type="number"
@@ -54,28 +14,14 @@
 							placeholder="Enter glory"
 						/>
 					</div>
-					<div class="flex flex-row items-center">
-						<strong class="mx-2 bg-blue-300 px-2">6.</strong>
+					<p class="m-2">Average: {{ team1average || 0 }}</p>
+				</section>
+				<section class="flex flex-col w-full md:w-1/2 p-4">
+					<h2 class="m-4">Team 2</h2>
+					<div v-for="(num, index) of [5, 6, 7, 8]" :key="index" class="flex flex-row items-center">
+						<strong class="has-blue-bg">{{ num }}</strong>
 						<input
-							v-model.number="glory6"
-							type="number"
-							class="input flex-grow"
-							placeholder="Enter glory"
-						/>
-					</div>
-					<div class="flex flex-row items-center">
-						<strong class="mx-2 bg-blue-300 px-2">7.</strong>
-						<input
-							v-model.number="glory7"
-							type="number"
-							class="input flex-grow"
-							placeholder="Enter glory"
-						/>
-					</div>
-					<div class="flex flex-row items-center">
-						<strong class="mx-2 bg-blue-300 px-2">8.</strong>
-						<input
-							v-model.number="glory8"
+							v-model.number="glory5"
 							type="number"
 							class="input flex-grow"
 							placeholder="Enter glory"
@@ -318,9 +264,9 @@ export default {
 <style lang="postcss">
 .input {
 	/* @apply m-1 mb-3 p-2 border border-gray-500 border-solid rounded; */
-	@apply m-2 mb-3 appearance-none border-2 border-gray-500 rounded py-2 px-4 text-gray-700 leading-tight;
+	@apply m-2 mb-3 bg-teal-800 text-white appearance-none border-2 border-gray-500 rounded py-2 px-4 leading-tight;
 	&:focus {
-		@apply outline-none bg-white border-blue-500;
+		@apply outline-none bg-teal-700 border-white;
 	}
 
 	&.has-error {
@@ -333,25 +279,25 @@ export default {
 }
 
 .has-red-bg {
-	@apply bg-red-300 px-2 mr-2;
+	@apply bg-red-600 px-2 mr-2;
 }
 
 .has-blue-bg {
-	@apply bg-blue-300 px-2 mr-2;
+	@apply bg-blue-600 px-2 mr-2;
 }
 
 .button {
-	@apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
+	@apply bg-blue-600 text-white font-bold py-2 px-4 rounded;
 
 	&:hover {
-		@apply bg-blue-700;
+		@apply bg-blue-500;
 	}
 
 	&:disabled {
-		@apply bg-gray-300;
+		@apply bg-gray-400;
 
 		&:hover {
-			@apply bg-gray-300 cursor-not-allowed;
+			@apply bg-gray-400 cursor-not-allowed;
 		}
 	}
 }
