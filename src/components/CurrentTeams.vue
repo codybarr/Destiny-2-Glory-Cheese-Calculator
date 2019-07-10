@@ -5,10 +5,10 @@
 			<section class="flex flex-wrap justify-center items-center -mx-4 px-8">
 				<section class="flex flex-col w-full md:w-1/2 p-4">
 					<h2 class="m-4">Team 1</h2>
-					<div v-for="(num, index) of [1, 2, 3, 4]" :key="index" class="flex flex-row items-center">
-						<strong class="has-red-bg">{{ num }}</strong>
+					<div v-for="(num, index) of [0, 1, 2, 3]" :key="index" class="flex flex-row items-center">
+						<strong class="has-red-bg">{{ num+1 }}</strong>
 						<input
-							v-model.number="glory5"
+							v-model.number="glory[num]"
 							type="number"
 							class="input flex-grow"
 							placeholder="Enter glory"
@@ -18,10 +18,10 @@
 				</section>
 				<section class="flex flex-col w-full md:w-1/2 p-4">
 					<h2 class="m-4">Team 2</h2>
-					<div v-for="(num, index) of [5, 6, 7, 8]" :key="index" class="flex flex-row items-center">
-						<strong class="has-blue-bg">{{ num }}</strong>
+					<div v-for="(num, index) of [4, 5, 6, 7]" :key="index" class="flex flex-row items-center">
+						<strong class="has-blue-bg">{{ num+1 }}</strong>
 						<input
-							v-model.number="glory5"
+							v-model.number="glory[num]"
 							type="number"
 							class="input flex-grow"
 							placeholder="Enter glory"
@@ -96,22 +96,17 @@ export default {
 	data() {
 		return {
 			// for testing
-			// glory1: 4321,
-			// glory2: 233,
-			// glory3: 1700,
-			// glory4: 2100,
-			// glory5: 3800,
-			// glory6: 600,
-			// glory7: 1200,
-			// glory8: 1945,
-			glory1: '',
-			glory2: '',
-			glory3: '',
-			glory4: '',
-			glory5: '',
-			glory6: '',
-			glory7: '',
-			glory8: '',
+			// glory: [
+			// 	this.randomGlory(),
+			// 	this.randomGlory(),
+			// 	this.randomGlory(),
+			// 	this.randomGlory(),
+			// 	this.randomGlory(),
+			// 	this.randomGlory(),
+			// 	this.randomGlory(),
+			// 	this.randomGlory()
+			// ],
+			glory: ['', '', '', '', '', '', '', ''],
 			newTeams: []
 		}
 	},
@@ -124,18 +119,18 @@ export default {
 	computed: {
 		team1empty() {
 			return (
-				this.glory1 == '' ||
-				this.glory2 == '' ||
-				this.glory3 == '' ||
-				this.glory4 == ''
+				this.glory[0] == '' ||
+				this.glory[1] == '' ||
+				this.glory[2] == '' ||
+				this.glory[3] == ''
 			)
 		},
 		team2empty() {
 			return (
-				this.glory5 == '' ||
-				this.glory6 == '' ||
-				this.glory7 == '' ||
-				this.glory8 == ''
+				this.glory[4] == '' ||
+				this.glory[5] == '' ||
+				this.glory[6] == '' ||
+				this.glory[7] == ''
 			)
 		},
 		empty() {
@@ -145,21 +140,21 @@ export default {
 			return this.team1empty
 				? 0
 				: (
-						(this.glory1 +
-							this.glory2 +
-							this.glory3 +
-							this.glory4) /
+						(this.glory[0] +
+							this.glory[1] +
+							this.glory[2] +
+							this.glory[3]) /
 						4
 				  ).toFixed(1)
 		},
 		team2average() {
-			return this.team2empty
+			return this.team1empty
 				? 0
 				: (
-						(this.glory5 +
-							this.glory6 +
-							this.glory7 +
-							this.glory8) /
+						(this.glory[4] +
+							this.glory[5] +
+							this.glory[6] +
+							this.glory[7]) /
 						4
 				  ).toFixed(1)
 		},
@@ -171,20 +166,16 @@ export default {
 		}
 	},
 	methods: {
+		randomGlory() {
+			return Math.floor(Math.random() * 2501)
+		},
 		isTeamOne(number) {
 			return number === 1 || number === 2 || number === 3 || number === 4
 		},
 		calculateTeams() {
-			const values = [
-				{ position: 1, orig_team: 1, glory: this.glory1 },
-				{ position: 2, orig_team: 1, glory: this.glory2 },
-				{ position: 3, orig_team: 1, glory: this.glory3 },
-				{ position: 4, orig_team: 1, glory: this.glory4 },
-				{ position: 5, orig_team: 2, glory: this.glory5 },
-				{ position: 6, orig_team: 2, glory: this.glory6 },
-				{ position: 7, orig_team: 2, glory: this.glory7 },
-				{ position: 8, orig_team: 2, glory: this.glory8 }
-			]
+			const values = this.glory.map((glory, index) => {
+				return { position: index, orig_team: index < 4 ? 1 : 2, glory }
+			})
 			let teams = []
 
 			for (let i = 0; i < 8; i++) {
@@ -279,11 +270,11 @@ export default {
 }
 
 .has-red-bg {
-	@apply bg-red-600 px-2 mr-2;
+	@apply bg-red-600 px-2 mr-2 rounded;
 }
 
 .has-blue-bg {
-	@apply bg-blue-600 px-2 mr-2;
+	@apply bg-blue-600 px-2 mr-2 rounded;
 }
 
 .button {
