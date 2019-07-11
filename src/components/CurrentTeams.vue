@@ -113,17 +113,17 @@ export default {
 	data() {
 		return {
 			// for testing
-			glory: [
-				this.randomGlory(),
-				this.randomGlory(),
-				this.randomGlory(),
-				this.randomGlory(),
-				this.randomGlory(),
-				this.randomGlory(),
-				this.randomGlory(),
-				this.randomGlory()
-			],
-			// glory: ['', '', '', '', '', '', '', ''],
+			// glory: [
+			// 	this.randomGlory(),
+			// 	this.randomGlory(),
+			// 	this.randomGlory(),
+			// 	this.randomGlory(),
+			// 	this.randomGlory(),
+			// 	this.randomGlory(),
+			// 	this.randomGlory(),
+			// 	this.randomGlory()
+			// ],
+			glory: ['', '', '', '', '', '', '', ''],
 			newTeams: []
 		}
 	},
