@@ -2,36 +2,45 @@
 	<div>
 		<article class="w-full text-center my-10 mx-auto">
 			<h1>Current Teams</h1>
-			<section class="flex flex-wrap justify-center items-center -mx-4 px-8">
-				<section class="flex flex-col w-full md:w-1/2 p-4">
-					<h2 class="m-4">Team 1</h2>
-					<div v-for="(num, index) of [0, 1, 2, 3]" :key="index" class="flex flex-row items-center">
-						<strong class="has-red-bg">{{ num+1 }}</strong>
-						<input
-							v-model.number="glory[num]"
-							type="number"
-							class="input flex-grow"
-							placeholder="Enter glory"
-						/>
-					</div>
-					<p class="m-2">Average: {{ team1average || 0 }}</p>
+			<div class="overflow-hidden">
+				<section class="flex flex-wrap justify-center items-center -mx-4 px-8">
+					<section class="flex flex-col w-full md:w-1/2 p-4">
+						<h2 class="m-4">Team 1</h2>
+						<div v-for="(num, index) of [0, 1, 2, 3]" :key="index" class="flex flex-row items-center">
+							<strong class="has-red-bg">{{ num+1 }}</strong>
+							<input
+								v-model.number="glory[num]"
+								type="number"
+								class="input flex-grow"
+								placeholder="Enter glory"
+							/>
+						</div>
+						<p class="m-2">
+							Avg:
+							<strong>{{ team1average || 0 }}</strong>
+						</p>
+					</section>
+					<section class="flex flex-col w-full md:w-1/2 p-4">
+						<h2 class="m-4">Team 2</h2>
+						<div v-for="(num, index) of [4, 5, 6, 7]" :key="index" class="flex flex-row items-center">
+							<strong class="has-blue-bg">{{ num+1 }}</strong>
+							<input
+								v-model.number="glory[num]"
+								type="number"
+								class="input flex-grow"
+								placeholder="Enter glory"
+							/>
+						</div>
+						<p class="m-2">
+							Avg:
+							<strong>{{ team2average || 0 }}</strong>
+						</p>
+					</section>
 				</section>
-				<section class="flex flex-col w-full md:w-1/2 p-4">
-					<h2 class="m-4">Team 2</h2>
-					<div v-for="(num, index) of [4, 5, 6, 7]" :key="index" class="flex flex-row items-center">
-						<strong class="has-blue-bg">{{ num+1 }}</strong>
-						<input
-							v-model.number="glory[num]"
-							type="number"
-							class="input flex-grow"
-							placeholder="Enter glory"
-						/>
-					</div>
-					<p class="m-2">Average: {{ team2average || 0 }}</p>
-				</section>
-			</section>
+			</div>
 			<p v-if="difference">
-				<strong>Difference: {{ difference }}</strong>
+				Diff:
+				<strong>{{ difference }}</strong>
 			</p>
 
 			<button @click="calculateTeams" class="button mt-4" :disabled="empty">Calculate New Teams</button>
@@ -49,7 +58,7 @@
 											<div
 												v-for="(player, index) of team.team1.players"
 												:key="index"
-												class="w-full p-1 text-left"
+												class="w-full p-1 text-left mb-1"
 											>
 												<strong
 													:class="[isTeamOne(player.position) ? 'has-red-bg' : 'has-blue-bg']"
@@ -57,6 +66,10 @@
 												{{ player.glory }}
 											</div>
 										</div>
+										<p class="m-2">
+											Avg:
+											<strong>{{ team.team1.average }}</strong>
+										</p>
 									</div>
 									<div class="w-full m-2">
 										<h2 class="whitespace-no-wrap mb-2">Team 2</h2>
@@ -64,7 +77,7 @@
 											<div
 												v-for="(player, index) of team.team2.players"
 												:key="index"
-												class="w-full p-1 text-left"
+												class="w-full p-1 text-left mb-1"
 											>
 												<strong
 													:class="[isTeamOne(player.position) ? 'has-red-bg' : 'has-blue-bg']"
@@ -72,10 +85,14 @@
 												{{ player.glory }}
 											</div>
 										</div>
+										<p class="m-2">
+											Avg:
+											<strong>{{ team.team2.average }}</strong>
+										</p>
 									</div>
 								</div>
 								<div>
-									Difference:
+									Diff:
 									<strong>{{ team.glory_difference }}</strong>
 								</div>
 							</div>
@@ -96,17 +113,17 @@ export default {
 	data() {
 		return {
 			// for testing
-			// glory: [
-			// 	this.randomGlory(),
-			// 	this.randomGlory(),
-			// 	this.randomGlory(),
-			// 	this.randomGlory(),
-			// 	this.randomGlory(),
-			// 	this.randomGlory(),
-			// 	this.randomGlory(),
-			// 	this.randomGlory()
-			// ],
-			glory: ['', '', '', '', '', '', '', ''],
+			glory: [
+				this.randomGlory(),
+				this.randomGlory(),
+				this.randomGlory(),
+				this.randomGlory(),
+				this.randomGlory(),
+				this.randomGlory(),
+				this.randomGlory(),
+				this.randomGlory()
+			],
+			// glory: ['', '', '', '', '', '', '', ''],
 			newTeams: []
 		}
 	},
@@ -139,28 +156,30 @@ export default {
 		team1average() {
 			return this.team1empty
 				? 0
-				: (
+				: _.round(
 						(this.glory[0] +
 							this.glory[1] +
 							this.glory[2] +
 							this.glory[3]) /
-						4
-				  ).toFixed(1)
+							4,
+						1
+				  )
 		},
 		team2average() {
 			return this.team1empty
 				? 0
-				: (
+				: _.round(
 						(this.glory[4] +
 							this.glory[5] +
 							this.glory[6] +
 							this.glory[7]) /
-						4
-				  ).toFixed(1)
+							4,
+						1
+				  )
 		},
 		difference() {
 			return (
-				Math.abs(this.team1average - this.team2average).toFixed(1) ||
+				_.round(Math.abs(this.team1average - this.team2average), 1) ||
 				null
 			)
 		}
@@ -174,7 +193,11 @@ export default {
 		},
 		calculateTeams() {
 			const values = this.glory.map((glory, index) => {
-				return { position: index, orig_team: index < 4 ? 1 : 2, glory }
+				return {
+					position: index + 1,
+					orig_team: index < 4 ? 1 : 2,
+					glory
+				}
 			})
 			let teams = []
 
@@ -222,8 +245,9 @@ export default {
 						}
 					}
 
-					team.glory_difference = Math.abs(
-						team.team1.average - team.team2.average
+					team.glory_difference = _.round(
+						Math.abs(team.team1.average - team.team2.average),
+						1
 					)
 					teams.push(team)
 				}
@@ -270,11 +294,11 @@ export default {
 }
 
 .has-red-bg {
-	@apply bg-red-600 px-2 mr-2 rounded;
+	@apply bg-red-600 px-2 mr-2 rounded inline-block;
 }
 
 .has-blue-bg {
-	@apply bg-blue-600 px-2 mr-2 rounded;
+	@apply bg-blue-600 px-2 mr-2 rounded inline-block;
 }
 
 .button {
