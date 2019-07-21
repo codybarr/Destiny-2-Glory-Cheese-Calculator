@@ -8,12 +8,7 @@
 						<h2 class="m-4">Team 1</h2>
 						<div v-for="(num, index) of [0, 1, 2, 3]" :key="index" class="flex flex-row items-center">
 							<strong class="has-red-bg">{{ num+1 }}</strong>
-							<input
-								v-model.number="glory[num]"
-								type="number"
-								class="input flex-grow"
-								placeholder="Enter glory"
-							/>
+							<glory-input v-model.number="glory[num]" />
 						</div>
 						<p class="m-2">
 							Avg:
@@ -24,12 +19,7 @@
 						<h2 class="m-4">Team 2</h2>
 						<div v-for="(num, index) of [4, 5, 6, 7]" :key="index" class="flex flex-row items-center">
 							<strong class="has-blue-bg">{{ num+1 }}</strong>
-							<input
-								v-model.number="glory[num]"
-								type="number"
-								class="input flex-grow"
-								placeholder="Enter glory"
-							/>
+							<glory-input v-model.number="glory[num]" />
 						</div>
 						<p class="m-2">
 							Avg:
@@ -106,10 +96,13 @@
 
 <script>
 const _ = require('lodash')
-import { required, numeric, minLength, between } from 'vuelidate/lib/validators'
+import GloryInput from '@/components/GloryInput.vue'
 
 export default {
 	name: 'CurrentTeams',
+	components: {
+		GloryInput
+	},
 	data() {
 		return {
 			// for testing
@@ -125,12 +118,6 @@ export default {
 			// ],
 			glory: ['', '', '', '', '', '', '', ''],
 			newTeams: []
-		}
-	},
-	validations: {
-		glory1: {
-			required,
-			numeric
 		}
 	},
 	computed: {
@@ -166,7 +153,7 @@ export default {
 				  )
 		},
 		team2average() {
-			return this.team1empty
+			return this.team2empty
 				? 0
 				: _.round(
 						(this.glory[4] +
@@ -277,22 +264,6 @@ export default {
 </script>
 
 <style lang="postcss">
-.input {
-	/* @apply m-1 mb-3 p-2 border border-gray-500 border-solid rounded; */
-	@apply m-2 mb-3 bg-teal-800 text-white appearance-none border-2 border-gray-500 rounded py-2 px-4 leading-tight;
-	&:focus {
-		@apply outline-none bg-teal-700 border-white;
-	}
-
-	&.has-error {
-		@apply border-red-700;
-	}
-
-	&.is-valid {
-		@apply border-green-300;
-	}
-}
-
 .has-red-bg {
 	@apply bg-red-600 px-2 mr-2 rounded inline-block;
 }
