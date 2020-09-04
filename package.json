@@ -18,7 +18,7 @@
 		"@vue/cli-plugin-babel": "^3.9.2",
 		"@vue/cli-plugin-pwa": "^3.9.0",
 		"@vue/cli-service": "^3.9.2",
-		"node-sass": "^4.9.0",
+		"node-sass": "^4.13.1",
 		"precss": "^4.0.0",
 		"sass-loader": "^7.1.0",
 		"tailwindcss": "^1.0.4",
