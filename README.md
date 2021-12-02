@@ -1,4 +1,4 @@
-# destiny
+# Destiny 2 Glory Cheese Calculator
 
 ## Project setup
 ```
